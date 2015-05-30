@@ -1,0 +1,69 @@
+package pippin;
+import java.util.ArrayList;
+
+public class Code{
+  public static final int CODE_MAX = 256;
+  private ArrayList<IntTriple> program = new ArrayList<>();
+  
+  public class IntTriple
+  {
+    private int op;
+    private int arg;
+    private int indirectionLevel;
+    
+    public IntTriple(int aOp, int aArg, int aIndirectLvl)
+    {
+      this.op = aOp;
+      this.arg = aArg;
+      this.indirectionLevel = aIndirectLvl;
+    }
+  }
+  
+  public int getProgramSize()
+  {
+    return this.program.size();
+  }
+  
+  public int getOp(int i)
+  {
+    IntTriple tempObj = program.get(i);
+    return tempObj.op;
+  }
+  
+  public int getArg(int i)
+  {
+    IntTriple tempObj = program.get(i);
+    return tempObj.arg;
+  }
+  
+  public int getIndirectionLevel(int i)
+  {
+    IntTriple tempObj = program.get(i);
+    return tempObj.indirectionLevel;
+  }
+  
+  void clear()
+  {
+    program.clear();
+  }
+ 
+  //We'll see if this works <one line>
+  public void setCode(int op, int arg, int level)
+  {
+    program.add(new IntTriple(op, arg, level));
+  }
+  
+  public String getCodeText(int i)
+  {
+    StringBuilder builder = new StringBuilder();
+    if(i < program.size()) {
+      builder.append(InstructionMap.mnemonics.get(program.get(i).op));
+      builder.append(' ');
+      for(int j = 0; j < program.get(i).indirectionLevel; j++) {
+        builder.append('[');
+      }
+      builder.append(program.get(i).arg);
+    }
+    return builder.toString();
+  }
+}
